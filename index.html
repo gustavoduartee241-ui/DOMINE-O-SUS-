@@ -316,6 +316,23 @@ footer .brand{font-family:Poppins;font-weight:900;color:#fff;letter-spacing:2px;
   .mbar{display:flex}
 }
 </style>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '822558979600644');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=822558979600644&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
 </head>
 <body>
 
@@ -638,6 +655,14 @@ footer .brand{font-family:Poppins;font-weight:900;color:#fff;letter-spacing:2px;
 <script>
 document.getElementById('y').textContent = new Date().getFullYear();
 // repassa parâmetros de campanha (utm, fbclid etc.) para o checkout da Kiwify
+// Meta Pixel: registra o clique nos botões de compra (evento personalizado)
+document.querySelectorAll('a[data-checkout]').forEach(function(a){
+  a.addEventListener('click', function(){
+    if (typeof fbq !== 'function') return;
+    var completo = a.href.indexOf('MuVD8qn') > -1;
+    fbq('trackCustom', 'CliqueCheckout', { plano: completo ? 'Completo' : 'Basico', value: completo ? 19.90 : 9.90, currency: 'BRL' });
+  });
+});
 if (location.search.length > 1) { document.querySelectorAll('a[data-checkout]').forEach(function(a){ a.href += (a.href.indexOf('?') > -1 ? '&' : '?') + location.search.slice(1); }); }
 // duplica a faixa de cards para rolagem contínua
 // barra fixa no celular: aparece depois do hero e some na seção de ofertas
